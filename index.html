@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>充值模版</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{zoom:1.227;font-family:-apple-system,"PingFang SC","Helvetica Neue",Arial,sans-serif;font-size:12px;color:#1f2329;background:#fff;height:100vh;overflow:hidden}
+.header{height:38px;background:#0d1f4f;color:#fff;display:flex;align-items:center;position:fixed;top:0;left:0;right:0;z-index:5}
+.logo{width:163px;display:flex;align-items:center;padding-left:26px;font-size:12.5px;font-weight:600}
+.logo i{width:26px;height:26px;background:#e8412c;border-radius:6px;margin-right:9px;display:inline-block;border:3px solid #fff}
+.menu-ico{margin-left:12px;width:14px;height:12px;border-top:2px solid #fff;border-bottom:2px solid #fff;position:relative}
+.menu-ico:after{content:"";position:absolute;left:0;right:3px;top:3px;border-top:2px solid #fff}
+.crumb{margin-left:22px;color:#b9c2d8;font-size:11px}
+.crumb b{color:#fff;font-weight:400}
+.hr{margin-left:auto;display:flex;align-items:center;gap:14px;padding-right:18px}
+.search{width:128px;height:28px;border:1px solid #3a4a78;border-radius:6px;color:#b9c2d8;display:flex;align-items:center;padding:0 10px;justify-content:space-between}
+.search kbd{border:1px solid #6b7aa5;border-radius:4px;padding:1px 6px;font-size:10px;font-family:inherit}
+.sq{width:28px;height:28px;border:1px solid #3a4a78;border-radius:6px}
+.company{width:162px;height:28px;border:1px solid #3a4a78;border-radius:6px;display:flex;align-items:center;justify-content:space-between;padding:0 10px;font-size:12px}
+.bell{position:relative;width:26px;height:26px;border-radius:50%;background:#2b3a66}
+.bell em{position:absolute;top:-6px;left:14px;background:#e8412c;border-radius:9px;padding:0 4px;font-size:10px;font-style:normal;line-height:14px}
+.dev{font-size:12px}
+.side{position:fixed;top:38px;left:0;bottom:0;width:163px;background:#fff;border-right:1px solid #e8eaef;overflow:hidden;padding-top:0}
+.mi{height:39.3px;display:flex;align-items:center;padding-left:23px;font-size:11.5px;position:relative;margin:0 6px 0 6px;padding-left:17px;border-radius:4px}
+.mi .ic{width:12px;height:12px;border:1.5px solid #4b5563;border-radius:3px;margin-right:12px}
+.mi .ar{position:absolute;right:8px;width:6px;height:6px;border-right:1.2px solid #8a8f99;border-bottom:1.2px solid #8a8f99;transform:rotate(45deg) scale(.8);top:14px}
+.mi.open{background:#f1f2f4}
+.mi.open .ar{transform:rotate(-135deg) scale(.8);top:17px}
+.sub{height:39.3px;display:flex;align-items:center;padding-left:32px;font-size:11px;color:#8e949c;margin:0 0 0 0}
+.sub.act{background:#4d86f3;color:#fff;margin:0 0 0 6px;padding-left:26px;border-radius:5px}
+.main{position:absolute;top:38px;left:163px;right:0;bottom:0;padding:0 16px;overflow:hidden}
+.tabs{margin-top:24px;display:inline-flex;border:1px solid #2b6ef2;border-radius:3px;height:27px;margin-left:0}
+.tabs span{cursor:pointer;padding:0 12px;line-height:25px;font-size:10px;color:#2b6ef2;background:#fff}
+.tabs span.on{background:#2b6ef2;color:#fff;font-weight:600}
+.form{display:flex;align-items:center;margin-top:16px;padding-left:26px;height:32px}
+.form label{font-size:12px;color:#1f2329}
+.inp{height:27px;border:1px solid #dcdfe6;border-radius:3px;padding:0 12px;color:#bfc4cc;font-size:11px;line-height:25px;background:#fff}
+.btns{position:absolute;right:16px;top:106px;display:flex;gap:8px}
+.btn{height:26px;padding:0 13px;border-radius:4px;color:#fff;font-size:11px;line-height:26px;font-weight:600}
+.b-red{background:#f23a4e}.b-grn{background:#13c25c}
+.tbl{position:absolute;top:148px;left:16px;right:16px}
+.tr{display:flex;height:54.9px;border-bottom:1px solid #eef0f3;align-items:center}
+.tr.th{height:48px;background:#f7f8fa;border:0;font-weight:600;font-size:9.5px;margin-top:0}
+.td{padding-left:8px;font-size:10.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:19px}
+.tr .td{flex:none}.tr .td.c5{flex:1}
+.c1{width:304px}.c2{width:303px;padding-right:12px}.c3{width:303px}.c4{width:303px}.c5{flex:1;display:flex;gap:8px}
+.tr:not(.th):hover{background:#f5f7fa}
+.c2{overflow:visible!important;position:relative;text-overflow:clip!important}
+.c2 .tx{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.c2 .tip{display:none;position:absolute;left:50%;transform:translateX(-50%);bottom:calc(100% + 9px);background:#1a1a1a;color:#fff;border-radius:4px;padding:8px 9px;font-size:10.5px;font-weight:600;line-height:16px;white-space:nowrap;z-index:50;text-align:left}
+.c2 .tip:after{content:"";position:absolute;left:50%;bottom:-5px;margin-left:-5px;border:5px solid transparent;border-bottom:0;border-top-color:#1a1a1a}
+.c2:hover .tip{display:block}
+.th .td{padding-left:8px;font-weight:600}
+.c5 i{font-style:normal;color:#fff;height:23px;line-height:23px;width:46px;text-align:center;border-radius:4px;font-size:10px;font-weight:600}
+.y{background:#f9b200}.u{background:#1f6bf0}
+.mask{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:20}
+.modal{position:absolute;left:157px;top:132px;width:1254px;background:#fff;border-radius:6px;min-height:294px}
+.mh{height:45px;border-bottom:1px solid #e8eaef;display:flex;align-items:center;padding:0 20px;font-size:12px;position:relative}
+.q{display:inline-block;width:10px;height:10px;border-radius:50%;background:#333;color:#fff;font-size:8px;line-height:10px;text-align:center;margin-left:4px;font-weight:700}
+.mh .x{position:absolute;right:19px;top:12px;color:#8a8f99;font-size:16px;cursor:pointer}
+.mb{display:flex;min-height:248px;position:relative}
+.ml{width:626px;padding:17px 20px 20px}
+.mr{flex:1;border-left:1px dashed #cfd3da;margin:17px 0 44px;padding:0 16px;position:relative}
+.ar-t{font-size:11px;color:#1f2329;line-height:18px;margin-top:0}
+.ar-t.dim{color:#8a8f99}
+.ar-t b{font-weight:600}
+.ar-t .n{color:#8a8f99;margin-left:6px}
+.cards{display:flex;flex-wrap:wrap;gap:8px;margin:7px 0 10px 81px}
+.add{width:210px;height:106px;background:#f4f2f2;border-radius:3px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#8a8f99;font-size:11px;cursor:pointer}
+.add span{font-size:20px;line-height:20px}
+.sc{width:210px;height:106px;background:#f4f2f2;border-radius:3px;padding:12px;position:relative;font-size:11px}
+.sc select{width:100%;height:26px;border:1px solid #dcdfe6;border-radius:3px;background:#fff;font-size:11px;padding:0 6px;margin-bottom:8px;color:#1f2329}
+.sc .del{position:absolute;right:6px;top:-1px;color:#8a8f99;cursor:pointer;font-size:14px}
+.ar-t.sb{display:grid;grid-template-columns:auto auto;justify-content:start;align-items:center;row-gap:8px;margin-bottom:12px}
+.ar-t.sb .f{margin:0 6px 0 0}
+.ar-t.sb select{width:100px;height:26px;border:1px solid #dcdfe6;border-radius:3px;background:#fff;font-size:11px;padding:0 6px;margin-right:0;color:#1f2329}
+.mask2{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:30}
+.m2{position:absolute;left:549px;top:132px;width:470px;background:#fff;border-radius:8px;height:217px}
+.m2 h4{font-size:14px;font-weight:600;padding:19px 20px 0;height:56px}
+.m2 .x{position:absolute;right:19px;top:16px;color:#8a8f99;font-size:14px;cursor:pointer}
+.m2 .row{display:flex;align-items:center;height:26px;position:absolute;left:0;right:20px}
+.m2 .row label{width:92px;text-align:right;font-size:11px;padding-right:10px;white-space:nowrap}
+.m2 .row .rq{color:#f23a4e}
+.m2 .ctl{flex:1;height:26px;border:1px solid #e1e4ea;border-radius:4px;display:flex;align-items:center;padding:0 5px;color:#bfc4cc;font-size:10px;justify-content:space-between;background:#fff}
+.m2 .ctl select{border:0;outline:0;background:transparent;width:100%;font-size:10px;color:#1f2329}
+.m2 .ctl input{border:0;outline:0;width:100%;font-size:10px}
+.m2 .ft{position:absolute;left:0;right:0;top:164px;border-top:1px solid #e8eaef;height:53px}
+.m2 .ok{position:absolute;right:20px;top:11px;width:48px;height:26px;background:#1f6bf0;color:#fff;border-radius:4px;text-align:center;line-height:26px;font-size:11px;font-weight:600;cursor:pointer}
+.rc{width:210px;height:106px;background:#f1eeee;border-radius:6px;position:relative;text-align:center;color:#1f2329}
+.rc .pc{position:absolute;right:0;top:0;background:#ffd998;border-radius:0 6px 0 8px;padding:0 6px;font-size:11px;line-height:19px;height:20px;border-radius:3px 6px 3px 8px}
+.rc .pr{font-size:17px;font-style:italic;color:#444;padding-top:26px;line-height:24px}
+.rc .pr small{font-size:14px;font-style:normal;color:#777;margin-left:3px}
+.rc .cb{font-size:13px;margin-top:10px;line-height:18px}
+.rc .ic{position:absolute;right:10px;bottom:7px;display:flex;gap:8px;color:#333;font-size:14px;line-height:14px}
+.rc .ic svg{width:14px;height:14px;stroke:#333;fill:none;stroke-width:1.4;cursor:pointer}
+.pv{display:none;width:230px;height:467px;position:relative;margin-top:0;overflow:hidden;background:#111}
+.pvi{width:460px;height:934px;position:absolute;left:0;top:0;transform:scale(.5);transform-origin:0 0;background:linear-gradient(#0d1114,#141b20 190px,#101010);color:#fff;font-family:-apple-system,"Helvetica Neue",Arial,sans-serif}
+.pvi .t{position:absolute;left:34px;top:4px;font-size:18px;color:#8b8b8b;line-height:24px}
+.pvi .bk{position:absolute;left:9px;top:4px;font-size:22px;color:#aaa}
+.pvi .sheet{position:absolute;left:5px;right:0;top:195px;bottom:0;border-radius:22px 22px 0 0;background:linear-gradient(135deg,#2a2018,#17120f 60%,#13100e)}
+.pvi .ep{position:absolute;left:16px;top:20px;font-size:14px;font-weight:600}
+.pvi .ep b{font-size:17px;margin-left:4px}
+.pvi .bl{position:absolute;left:16px;top:47px;font-size:14px;font-weight:600;display:flex;align-items:center}
+.pvi .cn{display:inline-block;width:17px;height:17px;border-radius:50%;background:#e9b35c;margin:0 6px 0 8px;border:2px solid #f3cf8d}
+.pvi .bl b{font-size:17px}
+.pvi .cl{position:absolute;right:6px;top:14px;font-size:20px;color:#ccc}
+.pvi .pl{position:absolute;left:20px;width:424px;height:118px;border-radius:14px;border:1px solid #3a2f25;background:linear-gradient(135deg,#2a1f17,#1a1411)}
+.pvi .pl.sel{border:1.5px solid #8a6f3a;background:linear-gradient(135deg,#4a3a1a,#2f2614 55%,#2b2a15)}
+.pvi .pl .n{position:absolute;left:16px;top:18px;font-size:22px;font-weight:700;color:#f3cc78}
+.pvi .pl .d{position:absolute;left:16px;top:52px;font-size:14px;color:#8a7a55}
+.pvi .pl .p{position:absolute;right:22px;top:26px;font-size:26px;font-weight:800;color:#ffd56b}
+.pvi .pl .f{position:absolute;bottom:12px;font-size:13px;display:flex;align-items:center;gap:8px}
+.pvi .pl .f i{display:inline-block;width:18px;height:18px;border-radius:4px;background:#f0b341;font-style:normal;color:#000;font-size:9px;text-align:center;line-height:18px}
+.pvi .pl .f i.ad{border-radius:50%;background:#e8c58a;font-weight:700}
+.pvi .tile{position:absolute;width:205px;height:74px;border-radius:10px;border:1px solid #333;background:#1a1a1a}
+.pvi .tile .a{position:absolute;left:16px;top:14px;font-size:20px;font-weight:700;display:flex;align-items:center}
+.pvi .tile .a em{font-style:normal;font-size:14px;color:#888;margin-left:8px;font-weight:600}
+.pvi .tile .a .cn{margin:0 6px 0 0}
+.pvi .tile .pr{position:absolute;left:18px;top:44px;font-size:14px;color:#888;font-weight:600}
+.pvi .psc{position:absolute;left:0;right:0;top:72px;bottom:134px;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;padding-top:10px}
+.pvi .psc .pl{position:relative;margin:0 0 26px 15px}
+.pvi #tiles{display:flex;flex-wrap:wrap;gap:10px 14px;padding:0 0 16px 15px}
+.pvi #tiles .tile{position:relative;top:auto!important;left:auto!important}
+.pvi .pay{position:absolute;left:0;right:0;top:800px;bottom:0;background:#0a0a0a}
+.pvi .pay .h{position:absolute;left:16px;top:13px;font-size:16px;font-weight:700}
+.pvi .pay .b{position:absolute;top:47px;height:36px;border-radius:8px;background:#fff;color:#000;text-align:center;line-height:36px;font-size:15px;font-weight:700;width:137px}
+.pvi .pay .sf{position:absolute;left:0;right:0;top:94px;text-align:center;font-size:13px;color:#2fbf71}
+.dd{position:relative;cursor:pointer;padding:0 8px;color:#1f2329;font-size:11px}
+.dd.open{border-color:#2b6ef2;z-index:10}
+.dd .dd-v{flex:1;display:flex;align-items:center}
+.dd .cur{color:#a8abb2;margin-right:5px}
+.dd .ph{color:#bfc4cc;font-size:10px}
+.dd .dd-c{color:#1f2329;font-size:11px;margin-right:8px}
+.dd .dd-ar{color:#8a8f99;font-size:11px;transition:transform .2s}
+.dd.open .dd-ar{transform:rotate(180deg)}
+.dd-list{display:none;position:absolute;left:0;right:0;top:31px;background:#fff;border:1px solid #e4e7ed;border-radius:4px;box-shadow:0 2px 12px rgba(0,0,0,.1);padding:4px 0;z-index:5;max-height:200px;overflow-y:auto}
+.dd.open .dd-list{display:block}
+.dd-it{display:flex;justify-content:space-between;align-items:center;height:28px;margin:0 3px;padding:0 9px;border-radius:4px;font-size:11px;color:#1f2329}
+.dd-it span:last-child{color:#a8abb2}
+.dd-it:hover{background:#f2f4f8}
+.dd-it.sel{color:#2b6ef2;font-weight:700;background:#f2f4f8}
+.dd-it.sel span:last-child{color:#606266;font-weight:700}
+.sdd{width:160px;height:27px;border:1px solid #dcdfe6;border-radius:4px;display:flex;align-items:center;background:#fff}
+.sdd:hover{border-color:#c0c4cc}
+.ar-t.sb select{display:none}
+.sdd .clr{display:none;color:#a8abb2;font-size:10px;margin-right:6px;width:13px;height:13px;line-height:13px;text-align:center;border-radius:50%}
+.sdd .clr:hover{background:#a8abb2;color:#fff}
+.sdd.has .clr{display:inline-block}
+.pv2{background:#fff}
+.wxi{width:460px;height:934px;position:absolute;left:0;top:0;transform:scale(.5);transform-origin:0 0;background:#fff;color:#111;font-family:-apple-system,"Helvetica Neue",Arial,sans-serif;overflow:hidden}
+.wxi .stb{position:absolute;left:0;right:0;top:0;height:52px;background:#1c1c1e;color:#fff}
+.wxi .stb .tm{position:absolute;left:38px;top:16px;font-size:17px;font-weight:600}
+.wxi .stb .sg{position:absolute;right:24px;top:16px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px}
+.wxi .stb .bat{display:inline-block;width:24px;height:12px;border:1.5px solid #fff;border-radius:4px;position:relative}
+.wxi .stb .bat:after{content:"";position:absolute;left:2px;top:2px;width:9px;height:5px;background:#fff;border-radius:1px}
+.wxi .nav{position:absolute;left:0;right:0;top:52px;height:56px;background:#1c1c1e;color:#fff}
+.wxi .nav .b1{position:absolute;left:24px;top:8px;font-size:32px;font-weight:300}
+.wxi .nav .b2{position:absolute;left:72px;top:10px;font-size:28px;font-weight:300}
+.wxi .nav .tt{position:absolute;left:0;right:0;text-align:center;top:16px;font-size:19px}
+.wxi .nav .mo{position:absolute;right:22px;top:10px;font-size:22px;letter-spacing:2px}
+.wxi .chp{position:absolute;left:0;right:0;top:108px;height:46px;background:#f4f4f4;color:#999;font-size:16px;line-height:46px;padding-left:24px}
+.wxi .wsc{position:absolute;left:0;right:0;top:154px;bottom:178px;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;padding:0 20px 10px}
+.wxi .ul{margin-top:24px;font-size:16px;color:#888;display:flex;align-items:center;white-space:nowrap}
+.wxi .ul b{color:#111;font-size:19px;margin:0 6px 0 12px}
+.wxi .ul .off{margin-left:8px;background:linear-gradient(90deg,#f6a54b,#ef6a5a);color:#fff;border-radius:5px;padding:2px 8px;font-size:14px;font-style:italic;font-weight:600}
+.wxi .bal{margin-top:14px;font-size:16px;color:#888;white-space:nowrap}
+.wxi .bal b{color:#111;font-size:18px;margin:0 4px 0 10px}
+.wxi .bal i{font-style:normal;color:#ccc;margin:0 2px 0 6px}
+.wxi .wp{position:relative;margin-top:24px;height:88px;border:1.5px solid #f6d9b0;border-radius:10px;background:linear-gradient(100deg,#fff4e6,#fffaf4 60%,#fff)}
+.wxi .wp.sel{border-color:#efae4c}
+.wxi .wp .rb{position:absolute;left:-2px;top:-12px;height:22px;line-height:22px;padding:0 12px 0 26px;font-size:13px;font-style:italic;font-weight:700;color:#fff;background:linear-gradient(90deg,#f07a2e,#f35a4f);border-radius:9px 2px 10px 0;transform:skewX(-8deg)}
+.wxi .wp .rb:before{content:"🔥";position:absolute;left:2px;top:-5px;font-size:17px;transform:skewX(8deg)}
+.wxi .wp .gf{position:absolute;left:20px;top:26px;font-size:32px}
+.wxi .wp .nm2{position:absolute;left:66px;top:20px;font-size:19px;font-weight:800;color:#9a6432}
+.wxi .wp .ds{position:absolute;left:66px;top:50px;font-size:13px;color:#444}
+.wxi .wp .pp{position:absolute;right:18px;top:22px;height:36px;line-height:36px;padding:0 13px;border-radius:18px;background:linear-gradient(90deg,#f5b23c,#f08a3c);color:#fff;font-weight:800;font-size:19px}
+.wxi .wp .pp small{font-size:13px;font-weight:500}
+.wxi .wp.wk .pp{top:12px}
+.wxi .wp .tot{position:absolute;right:42px;top:56px;font-size:13px;font-weight:700;color:#9a6432}
+.wxi .ch{margin-top:16px;display:flex;justify-content:space-between;align-items:center}
+.wxi .ch b{font-size:17px}
+.wxi .ch span{color:#888;font-size:14px}
+.wxi .wt{display:flex;flex-wrap:wrap;gap:12px 14px;margin-top:10px}
+.wxi .wti{width:203px;height:100px;border:1px solid #f6d9b0;border-radius:10px;overflow:hidden;background:#fff}
+.wxi .wti .tp{height:58px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;white-space:nowrap}
+.wxi .wti .co{display:inline-block;width:18px;height:18px;border-radius:50%;background:radial-gradient(#fbd56a,#e5a72c);border:1.5px solid #d99a26;margin-right:5px}
+.wxi .wti .pc2{margin-left:5px;border:1px solid #f0a64b;color:#ef8a2f;font-size:10px;font-weight:700;border-radius:4px;padding:0 4px;line-height:15px}
+.wxi .wti .bt{height:42px;line-height:42px;text-align:center;background:#fdebd6;color:#e8892d;font-weight:800;font-size:17px}
+.wxi .wpay{position:absolute;left:0;right:0;bottom:0;height:178px;background:#fff;padding:0 20px}
+.wxi .wpay .pb{position:absolute;top:8px;width:132px;height:44px;border:1px solid #ddd;border-radius:10px;text-align:center;line-height:42px;font-size:15px;font-weight:600;background:#fff}
+.wxi .wpay .pb.on{border:1.5px solid #ef8a4c;background:#fff3ea}
+.wxi .wpay .rd{position:absolute;left:0;right:0;top:60px;text-align:center;font-size:13px;color:#7a5230}
+.wxi .wpay .sb2{position:absolute;left:20px;right:28px;top:84px;height:48px;line-height:48px;border-radius:7px;background:#111;color:#fff;text-align:center;font-size:20px}
+.wxi .wpay .ov{position:absolute;left:0;right:0;top:144px;text-align:center;font-size:13px;color:#888}
+.wxi .wpay .ov b{color:#333}
+.nm{display:flex;align-items:center;font-size:11px;margin-top:0}
+.nm .rq{color:#f23a4e;margin-right:3px}
+.nm .ni{width:322px;height:27px;border:1px solid #dcdfe6;border-radius:6px;margin-left:5px;display:flex;align-items:center;justify-content:space-between;padding:0 10px;color:#bfc4cc}
+.nm .er{color:#f23a4e;margin-left:9px;font-size:10px}
+.sub-btn{position:absolute;right:20px;bottom:15px;background:#1f6bf0;color:#fff;width:49px;height:26px;border-radius:4px;text-align:center;line-height:26px;font-size:11px;font-weight:600}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo"><i></i>广告投放系统</div>
+  <div class="menu-ico"></div>
+  <div class="crumb">投放配置 &nbsp;/&nbsp; <b>充值模版</b></div>
+  <div class="hr">
+    <div class="search"><span>○ 搜索</span><kbd>⌘ K</kbd></div>
+    <div class="sq"></div>
+    <div class="company"><span>杭州快玩科技有限公司</span><span>⌄</span></div>
+    <div class="bell"><em>41</em></div>
+    <div class="sq" style="border:0;width:14px"></div>
+    <div class="sq" style="border:0;width:14px"></div>
+    <div class="dev">developer ▾</div>
+  </div>
+</div>
+
+<div class="side">
+  <div class="mi"><span class="ic"></span>自助投放<span class="ar"></span></div>
+  <div class="mi"><span class="ic"></span>排名统计</div>
+  <div class="mi"><span class="ic"></span>统计报表<span class="ar"></span></div>
+  <div class="mi"><span class="ic"></span>投放提成</div>
+  <div class="mi"><span class="ic"></span>结算统计<span class="ar"></span></div>
+  <div class="mi open"><span class="ic"></span>投放配置<span class="ar"></span></div>
+  <div class="sub" style="margin-top:2px">书籍列表</div>
+  <div class="sub">短剧列表</div>
+  <div class="sub">落地页</div>
+  <div class="sub">投放链接</div>
+  <div class="sub act">充值模版</div>
+  <div class="sub">客户名单</div>
+  <div class="sub">组像素管理</div>
+  <div class="sub">价值规则集</div>
+  <div class="mi" style="margin-top:7px"><span class="ic"></span>内容管理<span class="ar"></span></div>
+  <div class="mi"><span class="ic"></span>手动投放风控<span class="ar"></span></div>
+  <div class="mi"><span class="ic"></span>素材管理<span class="ar"></span></div>
+  <div class="mi"><span class="ic"></span>辅助工具<span class="ar"></span></div>
+  <div class="mi"><span class="ic"></span>通知详情</div>
+  <div class="mi"><span class="ic"></span>广告账户<span class="ar"></span></div>
+  <div class="mi"><span class="ic"></span>企业管理<span class="ar"></span></div>
+</div>
+
+<div class="main">
+  <div class="tabs"><span class="on">Kalos包</span><span>网文APP</span><span>网文H5</span><span>短剧H5</span></div>
+  <div class="form">
+    <label>模版名称</label>
+    <div class="inp" style="width:106px;margin-left:9px">模版名称</div>
+    <label style="margin-left:50px">创建人</label>
+    <div class="inp" style="width:106px;margin-left:9px;display:flex;justify-content:space-between"><span>创建人</span><span>⌄</span></div>
+  </div>
+  <div class="btns"><div class="btn b-red">○ 查询</div><div class="btn b-grn" id="addBtn" style="cursor:pointer">＋ 新增</div></div>
+
+  <div class="tbl" id="tbl"></div>
+</div>
+
+<div class="mask" id="mask">
+ <div class="modal">
+  <div class="mh">新增模版<span class="x" id="mx">✕</span></div>
+  <div class="mb">
+   <div class="ml">
+    <div class="nm" style="margin-bottom:16px"><span class="rq">*</span>模版名称:<div class="ni" id="niBox"><input id="tplName" maxlength="30" placeholder="请输入模版名称" style="border:0;outline:0;flex:1;font-size:11px;color:#1f2329;background:transparent"><span id="nameCnt">0/30</span></div><span class="er" id="nameErr" style="display:none">请填写模版名称</span></div>
+    <div class="ar-t sb" id="subArea"><span style="grid-column:1/3"><b>订阅区域:</b></span></div>
+    <div class="ar-t"><b>常规区域:</b><span class="n" id="regCnt">0/6</span></div>
+    <div class="cards" id="regCards"><div class="add" id="regAdd"><span>+</span>添加档位</div></div>
+    <div id="areaErr" style="display:none;color:#f23a4e;font-size:10px;margin:-4px 0 0 81px">订阅区域和常规区域至少配置一项</div>
+   </div>
+   <div class="mr"><div class="pv" id="pv"><div class="pvi">
+ <span class="bk">‹</span><span class="t">Divorce Then Domination</span>
+ <div class="sheet">
+  <div class="ep">This episode: <b>63</b></div>
+  <div class="bl">Balance:<span class="cn"></span><b>0</b></div>
+  <span class="cl">✕</span>
+  <div class="psc" id="psc"><div class="pl sel"><div class="n">Weekly VIP</div><div class="d">Cancel anytime · Auto Renew</div><div class="p" id="pw"></div><div class="f" style="left:18px"><i>▶</i>Watch All For Free</div><div class="f" style="left:238px"><i class="ad">AD</i>Ad-Free</div></div>
+  <div class="pl"><div class="n">Monthly VIP</div><div class="d">Cancel anytime · Auto Renew</div><div class="p" id="pm"></div><div class="f" style="left:18px"><i>▶</i>Watch All For Free</div><div class="f" style="left:238px"><i class="ad">AD</i>Ad-Free</div></div>
+  <div class="pl"><div class="n">Yearly VIP</div><div class="d">Cancel anytime · Auto Renew</div><div class="p" id="py"></div><div class="f" style="left:18px"><i>▶</i>Watch All For Free</div><div class="f" style="left:238px"><i class="ad">AD</i>Ad-Free</div></div><div id="tiles"></div></div>
+ </div>
+ <div class="pay"><div class="h">Choose your payment method</div><div class="b" style="left:21px">&#63743;Pay</div><div class="b" style="left:169px;color:#1d4fa8"><i style="font-style:italic">PayPal</i></div><div class="b" style="left:317px">▭ Card</div><div class="sf">⛉ Pay safe &amp; secure</div></div>
+</div></div>
+<div class="pv pv2" id="pv2"><div class="wxi" id="wxi"></div></div>
+</div>
+   <div class="sub-btn" id="submitBtn" style="cursor:pointer">提 交</div>
+  </div>
+ </div>
+</div>
+
+<div class="mask2" id="mask2">
+ <div class="m2">
+  <h4>档位设置</h4><span class="x" id="m2x">✕</span>
+  <div class="row" style="top:66px"><label><span class="rq">*</span> 充值金额 <span class="q">?</span></label><div class="ctl dd" id="amtBox"><input type="hidden" id="amt" value=""><span class="dd-v"><span class="cur">$</span><span id="amtTxt" class="ph">请选择充值金额</span></span><span class="dd-c" id="amtCoin"></span><span class="dd-ar">⌄</span>
+<div class="dd-list" id="amtList"></div></div></div>
+  <div class="row" style="top:107px"><label><span class="rq">*</span> <span id="bonLbl">赠送bonus</span></label><div class="ctl"><span style="flex:1;display:flex;align-items:center">$&nbsp;<input id="bon" placeholder="请填写赠送bonus数量"></span></div></div>
+  <div class="ft"><div class="ok" id="m2ok">确 定</div></div>
+ </div>
+</div>
+
+<script>
+var CFG={
+ dj:{subs:[['周卡',['$24.99','$32.99','$39.99']],['月卡',['$69.99','$79.99','$99.99']],['年卡',['$199.99','$299.99','$399.99']]],bonus:'bonus',store:'dj_h5_tpl'},
+ wx:{subs:[['日卡',['$9.99','$14.99','$19.99']],['周卡',['$24.99','$32.99','$39.99']]],bonus:'书券',store:'wx_h5_tpl'}
+};
+var MODE='dj';
+var mask=document.getElementById('mask');
+function curTab(){return document.querySelector('.tabs span.on').textContent;}
+function modeOf(t){return t==='短剧H5'?'dj':t==='网文H5'?'wx':null;}
+document.getElementById('addBtn').onclick=function(){
+ var m=modeOf(curTab());if(!m)return;
+ MODE=m;buildSub();
+ document.getElementById('bonLbl').textContent='赠送'+CFG[m].bonus;
+ document.getElementById('bon').placeholder='请填写赠送'+CFG[m].bonus+'数量';
+ resetForm();mask.style.display='block';
+};
+document.getElementById('regAdd').onclick=function(){document.getElementById('mask2').style.display='block';};
+document.getElementById('m2x').onclick=function(){document.getElementById('mask2').style.display='none';};
+function subVals(){return [].map.call(document.querySelectorAll('#subArea select'),function(x){return x.value});}
+function renderPv(){
+ sddSync();
+ var ae=document.getElementById('areaErr');if(ae)ae.style.display='none';
+ var v=subVals(),cs=[].slice.call(document.querySelectorAll('#regCards .rc'));
+ var pv=document.getElementById('pv'),pv2=document.getElementById('pv2');
+ pv.style.display='none';pv2.style.display='none';
+ if(!v.some(Boolean)&&!cs.length)return;
+ if(MODE==='wx'){renderWx(v,cs);pv2.style.display='block';return;}
+ pv.style.display='block';
+ var ids=['pw','pm','py'],pls=document.querySelectorAll('#pv .pl'),k=0;
+ for(var i=0;i<3;i++){
+  var p=pls[i];
+  if(v[i]){p.style.display='block';p.className='pl'+(k==0?' sel':'');document.getElementById(ids[i]).textContent=v[i];k++;}
+  else p.style.display='none';
+ }
+ var h='';
+ cs.forEach(function(c){h+='<div class="tile"><div class="a"><span class="cn"></span>'+c.dataset.coin+'<em>+'+c.dataset.bonus+'</em></div><div class="pr">$'+c.dataset.price+'</div></div>';});
+ document.getElementById('tiles').innerHTML=h;
+}
+function renderWx(v,cs){
+ var sc=document.querySelector('#wxi .wsc'),st=sc?sc.scrollTop:0;
+ var h='<div class="stb"><span class="tm">11:43</span><span class="sg">▮▮▮ 5G <span class="bat"></span></span></div>'+
+  '<div class="nav"><span class="b1">‹</span><span class="b2">✕</span><div class="tt">CraveFiction</div><span class="mo">•••</span></div>'+
+  '<div class="chp">Chapter 5</div><div class="wsc">'+
+  '<div class="ul">Unlock :<b>209</b>Coins / Bonus<span class="off">-52 this time</span></div>'+
+  '<div class="bal">Balance :<b>0</b>Coins<i>|</i><b>0</b>Bonus</div>';
+ var first=null,k=0;
+ if(v[0]){h+='<div class="wp'+(k==0?' sel':'')+'"><span class="rb">Hot</span><span class="gf">🎁</span><div class="nm2">1-Day Pass</div><div class="ds">All books unlocked for 1 day</div><div class="pp">'+v[0]+'</div></div>';first=first||'1 day';k++;}
+ if(v[1]){var per=(parseFloat(v[1].replace('$',''))/7).toFixed(2);h+='<div class="wp wk'+(k==0?' sel':'')+'"><span class="rb">1.9K Bought</span><span class="gf">🎁</span><div class="nm2">Weekly</div><div class="ds">All books unlocked for 7 days</div><div class="pp">$'+per+'<small>/Day</small></div><div class="tot">'+v[1]+'</div></div>';first=first||'7 days';k++;}
+ if(cs.length){h+='<div class="ch"><b>Coins</b><span>More ›</span></div><div class="wt">';
+  cs.forEach(function(c){var bn=+c.dataset.bonus,pct=Math.ceil(bn/c.dataset.coin*100);
+   h+='<div class="wti"><div class="tp"><span class="co"></span>'+c.dataset.coin+(bn?'+'+bn+'<span class="pc2">+'+pct+'%</span>':'')+'</div><div class="bt">$ '+c.dataset.price+'</div></div>';});
+  h+='</div>';}
+ h+='</div><div class="wpay"><div class="pb on" style="left:20px">&#63743; Pay</div><div class="pb" style="left:164px;color:#1d4fa8;font-style:italic;font-weight:800">PayPal</div><div class="pb" style="left:308px">▭ Card</div>'+
+  (first?'<div class="rd">Read all books freely for <b><i>'+first+'</i></b></div><div class="sb2">Subscribe with &#63743;Pay</div>':'<div class="sb2" style="top:70px">&#63743;Pay</div>')+
+  '<div class="ov">●●●●● Over <b>4.4K</b> unlocked</div></div>';
+ document.getElementById('wxi').innerHTML=h;
+ document.querySelector('#wxi .wsc').scrollTop=st;
+}
+function sddSync(){document.querySelectorAll('#subArea select').forEach(function(sel){
+ var box=sel.nextElementSibling;if(!box||!box.classList.contains('sdd'))return;
+ var v=sel.value,t=box.querySelector('.sv');t.textContent=v?v.replace('$',''):'请选择';t.className='sv'+(v?'':' ph');
+ box.querySelector('.cur').style.display=v?'inline':'none';
+ box.classList.toggle('has',!!v);
+ box.querySelector('.dd-list').innerHTML=[].slice.call(sel.options).filter(function(o){return o.value}).map(function(o){return '<div class="dd-it'+(o.value===v?' sel':'')+'" data-v="'+o.value+'"><span>$ '+o.value.replace('$','')+'</span><span></span></div>';}).join('');
+});}
+function buildSub(){
+ var area=document.getElementById('subArea');
+ area.innerHTML='<span style="grid-column:1/3"><b>订阅区域:</b></span>';
+ CFG[MODE].subs.forEach(function(sv){
+  var lb=document.createElement('span');lb.className='f';lb.style.marginLeft='81px';lb.textContent=sv[0];area.appendChild(lb);
+  var sel=document.createElement('select');sel.innerHTML='<option value="">请选择</option>'+sv[1].map(function(p){return '<option>'+p+'</option>'}).join('');area.appendChild(sel);
+  var box=document.createElement('div');box.className='dd sdd';
+  box.innerHTML='<span class="dd-v"><span class="cur">$</span><span class="sv ph">请选择</span></span><span class="clr" title="清空">✕</span><span class="dd-ar">⌄</span><div class="dd-list"></div>';
+  area.appendChild(box);
+  box.onclick=function(e){
+   if(e.target.classList.contains('clr')){sel.value='';box.classList.remove('open');e.stopPropagation();renderPv();return;}
+   var it=e.target.closest('.dd-it');
+   if(it){sel.value=it.dataset.v;box.classList.remove('open');e.stopPropagation();renderPv();return;}
+   document.querySelectorAll('.sdd.open').forEach(function(b){if(b!==box)b.classList.remove('open')});box.classList.toggle('open');};
+ });
+ sddSync();
+}
+document.addEventListener('click',function(e){document.querySelectorAll('.sdd.open').forEach(function(b){if(!b.contains(e.target))b.classList.remove('open');});});
+var regCards=document.getElementById('regCards'),regAdd=document.getElementById('regAdd');
+function regCnt(){var n=regCards.querySelectorAll('.rc').length;document.getElementById('regCnt').textContent=n+'/6';regAdd.style.display=n>=6?'none':'flex';renderPv();}
+var AMTS=['9.99','19.99','29.99','49.99','79.99','99.99'],amtBox=document.getElementById('amtBox'),amtList=document.getElementById('amtList');
+function coinOf(p){return Math.round(parseFloat(p))*100;}
+function setAmt(p){
+ document.getElementById('amt').value=p;
+ var t=document.getElementById('amtTxt');t.textContent=p||'请选择充值金额';t.className=p?'':'ph';
+ document.getElementById('amtCoin').textContent=p?coinOf(p)+' coins':'';
+ amtList.innerHTML=AMTS.map(function(x){return '<div class="dd-it'+(x===p?' sel':'')+'" data-v="'+x+'"><span>$ '+x+'</span><span>'+coinOf(x)+' coins</span></div>';}).join('');
+}
+setAmt('');
+amtBox.onclick=function(e){var it=e.target.closest('.dd-it');if(it){setAmt(it.dataset.v);amtBox.classList.remove('open');e.stopPropagation();return;}amtBox.classList.toggle('open');};
+document.addEventListener('click',function(e){if(!amtBox.contains(e.target))amtBox.classList.remove('open');});
+document.getElementById('m2ok').onclick=function(){
+ var a=document.getElementById('amt').value,b=document.getElementById('bon').value;
+ if(!a||b==='')return;
+ var coin=coinOf(a),bn=parseFloat(b)||0,pct=Math.ceil(bn/coin*100);
+ var d=document.createElement('div');d.className='rc';d.dataset.coin=coin;d.dataset.bonus=bn;d.dataset.price=a;
+ d.innerHTML='<div class="pc">'+pct+'%</div><div class="pr">'+a+'<small>$</small></div><div class="cb">'+coin+'coin 赠 '+bn+CFG[MODE].bonus+'</div><div class="ic"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="2.5"/><circle cx="8" cy="8" r="6"/></svg><svg class="dl" viewBox="0 0 16 16"><path d="M2 4h12M6 4V2h4v2M3.5 4l.7 10h7.6l.7-10M6.5 7v5M9.5 7v5"/></svg><svg viewBox="0 0 16 16"><path d="M8 1v14M1 8h14M8 1l-2 2M8 1l2 2M8 15l-2-2M8 15l2-2M1 8l2-2M1 8l2 2M15 8l-2-2M15 8l-2 2"/></svg></div>';
+ d.querySelector('.dl').onclick=function(){d.remove();regCnt();};
+ regCards.insertBefore(d,regAdd);regCnt();
+ setAmt('');document.getElementById('bon').value='';
+ document.getElementById('mask2').style.display='none';
+};
+document.getElementById('mx').onclick=function(){mask.style.display='none';};
+var rows=[
+["test订阅模版-副本8","12.99vip订阅周卡","0.99($) 70coin 赠 0bonus 赠送比例 0%；2.99($) 21...","developer","2026-11-23 18:49:21"],
+["q-高充模板9.99起-带24.99订阅模板-副本0-副本0","24.99vip订阅周卡","9.99($) 700coin 赠 0bonus 赠送比例 0%；19.99($) ...","丁嘉乐2","2026-11-16 18:16:40"],
+["lyr-高冲模板-9.99起-24.99周卡-副本2-副本1-副本0-副本0","24.99vip订阅周卡","9.99($) 700coin 赠 0bonus 赠送比例 0%；19.99($) ...","陈博","2026-11-15 18:26:06"],
+["lyr-高冲模板-9.99起-24.99周卡-副本2-副本1-副本0","24.99vip订阅周卡","9.99($) 700coin 赠 0bonus 赠送比例 0%；19.99($) ...","杨英杰","2026-09-01 19:31:01"],
+["q-高充模板9.99起-带24.99订阅模板-副本0","24.99vip订阅周卡","9.99($) 700coin 赠 0bonus 赠送比例 0%；19.99($) ...","陈晖","2026-08-31 23:51:15"],
+["模版1","19.99vip订阅周卡","119.99($) 8400coin 赠 1000bonus 赠送比例 12%；...","投放吕畅","2026-08-31 22:53:19"],
+["testc1","24.99vip订阅周卡","119.99($) 8400coin 赠 19bonus 赠送比例 1%；99.9...","developer","2026-08-31 19:29:27"],
+["test订阅模版-编辑模板-副本0","19.99vip订阅周卡","0.99($) 70coin 赠 0bonus 赠送比例 0%；2.99($) 21...","developer","2026-08-30 19:20:53"],
+["test订阅模版-编辑模板","19.99vip订阅周卡","0.99($) 70coin 赠 0bonus 赠送比例 0%；2.99($) 21...","developer","2026-08-25 05:11:47"],
+["test订阅模版","12.99vip订阅周卡","0.99($) 70coin 赠 0bonus 赠送比例 0%；2.99($) 21...","曾淑琳","2026-08-17 04:52:09"],
+["lyr-高冲模板-9.99起-24.99周卡-副本2-副本2-副本0","24.99vip订阅周卡","9.99($) 700coin 赠 0bonus 赠送比例 0%；19.99($) ...","developer","2026-08-17 02:35:49"],
+["lyr-高冲模板-9.99起-24.99周卡-副本2-副本2","24.99vip订阅周卡","9.99($) 700coin 赠 0bonus 赠送比例 0%；19.99($) ...","张云蕾","2026-07-24 18:45:37"]
+];
+var hd='<div class="tr th"><div class="td c1">模板名称</div><div class="td c2">档位</div><div class="td c3">创建人</div><div class="td c4">创建时间</div><div class="td c5" style="display:block;padding-left:8px">操作</div></div>';
+var FULL={"模版1":["119.99($) 8400coin 赠 1000bonus 赠送比例 12%","99.99($) 7000coin 赠 500bonus 赠送比例 8%","79.99($) 5600coin 赠 200bonus 赠送比例 4%","59.99($) 4200coin 赠 100bonus 赠送比例 3%","49.99($) 3500coin 赠 50bonus 赠送比例 2%","0.99($) 70coin 赠 1bonus 赠送比例 2%"]};
+var MYS={dj:JSON.parse(localStorage.getItem('dj_h5_tpl')||'[]'),wx:JSON.parse(localStorage.getItem('wx_h5_tpl')||'[]')};
+function rowHtml(name,sub,items,who,time,edit){
+ var tip='订阅模版: '+(sub||'无')+'<br>常规区域:'+(items.length?'<br>'+items.join('<br>'):' 无');
+ return '<div class="tr"><div class="td c1">'+name+'</div><div class="td c2"><span class="tx">订阅模版: '+(sub||'无')+'<br>常规区域: '+(items.join('；')||'无')+'</span><div class="tip">'+tip+'</div></div><div class="td c3">'+who+'</div><div class="td c4">'+time+'</div><div class="td c5" style="padding-left:8px"><i class="y">复制</i>'+(edit?'<i class="u">编辑</i>':'')+'</div></div>';
+}
+function esc(t){return t.replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]});}
+function build(m){var h=hd,op=!!m;
+if(op)MYS[m].forEach(function(m){h+=rowHtml(esc(m.name),m.sub,m.items,m.who,m.time,true);});
+rows.forEach(function(r,idx){
+var ops=op&&idx<5,who=ops?'运营':r[3];
+var r2=m==='wx'?r[2].replace(/bonus/g,'书券'):r[2];
+var items=(FULL[r[0]]||r2.split('；')).map(function(x){return m==='wx'?x.replace(/bonus/g,'书券'):x}).filter(function(x){return x.indexOf('...')<0&&x.indexOf('…')<0});
+var _u=r2.split('；').filter(function(x){return x.indexOf('...')<0&&x.indexOf('…')<0});
+var tip='订阅模版: '+r[1]+'<br>常规区域:'+(items.length?'<br>'+items.join('<br>'):'');
+h+='<div class="tr"><div class="td c1">'+r[0]+'</div><div class="td c2"><span class="tx">订阅模版: '+r[1]+'<br>常规区域: '+r2+'</span><div class="tip">'+tip+'</div></div><div class="td c3">'+who+'</div><div class="td c4">'+r[4]+'</div><div class="td c5" style="padding-left:8px"><i class="y">复制</i>'+(ops?'':'<i class="u">编辑</i>')+'</div></div>';
+});
+return h;}
+
+document.getElementById('tbl').innerHTML=build(null);
+var nameIn=document.getElementById('tplName');
+nameIn.oninput=function(){document.getElementById('nameCnt').textContent=nameIn.value.length+'/30';if(nameIn.value.trim()){document.getElementById('nameErr').style.display='none';document.getElementById('niBox').style.borderColor='#dcdfe6';}};
+function pad(n){return n<10?'0'+n:n}
+function resetForm(){
+ nameIn.value='';document.getElementById('nameCnt').textContent='0/30';
+ document.getElementById('nameErr').style.display='none';document.getElementById('niBox').style.borderColor='#dcdfe6';
+ document.querySelectorAll('#subArea select').forEach(function(x){x.value='';});
+ document.querySelectorAll('#regCards .rc').forEach(function(x){x.remove();});
+ regCnt();
+}
+document.getElementById('submitBtn').onclick=function(){
+ var name=nameIn.value.trim();
+ if(!name){document.getElementById('nameErr').style.display='inline';document.getElementById('niBox').style.borderColor='#f23a4e';return;}
+ var sel=document.querySelectorAll('#subArea select'),kinds=CFG[MODE].subs.map(function(x){return x[0]}),sub=[];
+ sel.forEach(function(x,i){if(x.value)sub.push(x.value.replace('$','')+'vip订阅'+kinds[i]);});
+ if(!sub.length&&!document.querySelectorAll('#regCards .rc').length){document.getElementById('areaErr').style.display='block';return;}
+ var items=[].map.call(document.querySelectorAll('#regCards .rc'),function(c){
+  var pct=Math.ceil(c.dataset.bonus/c.dataset.coin*100);
+  return c.dataset.price+'($) '+c.dataset.coin+'coin 赠 '+c.dataset.bonus+CFG[MODE].bonus+' 赠送比例 '+pct+'%';});
+ var d=new Date(),t=d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+' '+pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds());
+ MYS[MODE].unshift({name:name,sub:sub.join('、'),items:items,who:'developer',time:t});
+ localStorage.setItem(CFG[MODE].store,JSON.stringify(MYS[MODE]));
+ mask.style.display='none';resetForm();
+ document.getElementById('tbl').innerHTML=build(MODE);
+};
+var tabs=document.querySelectorAll('.tabs span');
+tabs.forEach(function(t){t.onclick=function(){tabs.forEach(function(x){x.classList.remove('on')});t.classList.add('on');document.getElementById('tbl').innerHTML=build(modeOf(t.textContent));};});
+</script>
+</body>
+</html>
