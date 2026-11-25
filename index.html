@@ -462,7 +462,10 @@ document.getElementById('submitBtn').onclick=function(){
  if(!name){document.getElementById('nameErr').style.display='inline';document.getElementById('niBox').style.borderColor='#f23a4e';return;}
  var sel=document.querySelectorAll('#subArea select'),kinds=CFG[MODE].subs.map(function(x){return x[0]}),sub=[];
  sel.forEach(function(x,i){if(x.value)sub.push(x.value.replace('$','')+'vip订阅'+kinds[i]);});
- if(!sub.length&&!document.querySelectorAll('#regCards .rc').length){document.getElementById('areaErr').style.display='block';return;}
+ var ae=document.getElementById('areaErr');
+ if(!sub.length&&!document.querySelectorAll('#regCards .rc').length){ae.textContent='订阅区域和常规区域至少配置一项';ae.style.display='block';return;}
+ var ps=[].map.call(document.querySelectorAll('#regCards .rc'),function(c){return c.dataset.price});
+ if(ps.some(function(p,i){return ps.indexOf(p)!==i})){ae.textContent='有重复的档位';ae.style.display='block';return;}
  var items=[].map.call(document.querySelectorAll('#regCards .rc'),function(c){
   var pct=Math.ceil(c.dataset.bonus/c.dataset.coin*100);
   return c.dataset.price+'($) '+c.dataset.coin+'coin 赠 '+c.dataset.bonus+CFG[MODE].bonus+' 赠送比例 '+pct+'%';});
