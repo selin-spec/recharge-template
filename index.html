@@ -269,7 +269,7 @@ body{zoom:1.227;font-family:-apple-system,"PingFang SC","Helvetica Neue",Arial,s
    <div class="ml">
     <div class="nm" style="margin-bottom:16px"><span class="rq">*</span>模版名称:<div class="ni" id="niBox"><input id="tplName" maxlength="30" placeholder="请输入模版名称" style="border:0;outline:0;flex:1;font-size:11px;color:#1f2329;background:transparent"><span id="nameCnt">0/30</span></div><span class="er" id="nameErr" style="display:none">请填写模版名称</span></div>
     <div class="ar-t sb" id="subArea"><span style="grid-column:1/3"><b>订阅区域:</b></span></div>
-    <div class="ar-t"><b>常规区域:</b><span class="n" id="regCnt">0/6</span></div>
+    <div class="ar-t"><b>常规区域:</b><span class="n" id="regCnt">至少一个</span></div>
     <div class="cards" id="regCards"><div class="add" id="regAdd"><span>+</span>添加档位</div></div>
     <div id="areaErr" style="display:none;color:#f23a4e;font-size:10px;margin:-4px 0 0 81px">订阅区域和常规区域至少配置一项</div>
    </div>
@@ -387,7 +387,7 @@ function buildSub(){
 }
 document.addEventListener('click',function(e){document.querySelectorAll('.sdd.open').forEach(function(b){if(!b.contains(e.target))b.classList.remove('open');});});
 var regCards=document.getElementById('regCards'),regAdd=document.getElementById('regAdd');
-function regCnt(){var n=regCards.querySelectorAll('.rc').length;document.getElementById('regCnt').textContent=n+'/6';regAdd.style.display=n>=6?'none':'flex';renderPv();}
+function regCnt(){var n=regCards.querySelectorAll('.rc').length;regAdd.style.display=n>=6?'none':'flex';renderPv();}
 var AMTS=['9.99','19.99','29.99','49.99','79.99','99.99'],amtBox=document.getElementById('amtBox'),amtList=document.getElementById('amtList');
 function coinOf(p){return Math.round(parseFloat(p))*100;}
 function setAmt(p){
