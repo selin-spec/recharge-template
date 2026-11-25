@@ -304,8 +304,8 @@ body{zoom:1.227;font-family:-apple-system,"PingFang SC","Helvetica Neue",Arial,s
 
 <script>
 var CFG={
- dj:{subs:[['周卡',['$24.99','$32.99','$39.99']],['月卡',['$69.99','$79.99','$99.99']],['年卡',['$199.99','$299.99','$399.99']]],bonus:'bonus',store:'dj_h5_tpl'},
- wx:{subs:[['日卡',['$9.99','$14.99','$19.99']],['周卡',['$24.99','$32.99','$39.99']]],bonus:'书券',store:'wx_h5_tpl'}
+ dj:{amts:['19.99','29.99','39.99','49.99','59.99','99.99','199.99'],subs:[['周卡',['$9.99','$24.99','$32.99','$39.99']],['月卡',['$69.99','$79.99','$99.99']],['年卡',['$199.99','$299.99','$399.99']]],bonus:'bonus',store:'dj_h5_tpl'},
+ wx:{amts:['1.99','4.99','7.99','9.99','19.99','24.99','25.99','29.99','39.99','49.99','59.99','79.99','99.99'],subs:[['日卡',['$9.99','$14.99']],['周卡',['$19.99','$29.99','$39.99']],['月卡',['$49.99','$59.99']]],bonus:'书券',store:'wx_h5_tpl'}
 };
 var MODE='dj';
 var mask=document.getElementById('mask');
@@ -319,7 +319,7 @@ document.getElementById('addBtn').onclick=function(){
  document.getElementById('bon').placeholder='请填写赠送'+CFG[m].bonus+'数量';
  resetForm();mask.style.display='block';
 };
-document.getElementById('regAdd').onclick=function(){document.getElementById('mask2').style.display='block';};
+document.getElementById('regAdd').onclick=function(){setAmt('');document.getElementById('bon').value='';document.getElementById('mask2').style.display='block';};
 document.getElementById('m2x').onclick=function(){document.getElementById('mask2').style.display='none';};
 function subVals(){return [].map.call(document.querySelectorAll('#subArea select'),function(x){return x.value});}
 function renderPv(){
@@ -351,6 +351,7 @@ function renderWx(v,cs){
  var first=null,k=0;
  if(v[0]){h+='<div class="wp'+(k==0?' sel':'')+'"><span class="rb">Hot</span><span class="gf">🎁</span><div class="nm2">1-Day Pass</div><div class="ds">All books unlocked for 1 day</div><div class="pp">'+v[0]+'</div></div>';first=first||'1 day';k++;}
  if(v[1]){var per=(parseFloat(v[1].replace('$',''))/7).toFixed(2);h+='<div class="wp wk'+(k==0?' sel':'')+'"><span class="rb">1.9K Bought</span><span class="gf">🎁</span><div class="nm2">Weekly</div><div class="ds">All books unlocked for 7 days</div><div class="pp">$'+per+'<small>/Day</small></div><div class="tot">'+v[1]+'</div></div>';first=first||'7 days';k++;}
+ if(v[2]){var pm=(parseFloat(v[2].replace('$',''))/30).toFixed(2);h+='<div class="wp wk'+(k==0?' sel':'')+'"><span class="rb">Best Value</span><span class="gf">🎁</span><div class="nm2">Monthly</div><div class="ds">All books unlocked for 30 days</div><div class="pp">$'+pm+'<small>/Day</small></div><div class="tot">'+v[2]+'</div></div>';first=first||'30 days';k++;}
  if(cs.length){h+='<div class="ch"><b>Coins</b><span>More ›</span></div><div class="wt">';
   cs.forEach(function(c){var bn=+c.dataset.bonus,pct=Math.ceil(bn/c.dataset.coin*100);
    h+='<div class="wti"><div class="tp"><span class="co"></span>'+c.dataset.coin+(bn?'+'+bn+'<span class="pc2">+'+pct+'%</span>':'')+'</div><div class="bt">$ '+c.dataset.price+'</div></div>';});
@@ -394,7 +395,7 @@ function setAmt(p){
  document.getElementById('amt').value=p;
  var t=document.getElementById('amtTxt');t.textContent=p||'请选择充值金额';t.className=p?'':'ph';
  document.getElementById('amtCoin').textContent=p?coinOf(p)+' coins':'';
- amtList.innerHTML=AMTS.map(function(x){return '<div class="dd-it'+(x===p?' sel':'')+'" data-v="'+x+'"><span>$ '+x+'</span><span>'+coinOf(x)+' coins</span></div>';}).join('');
+ amtList.innerHTML=CFG[MODE].amts.map(function(x){return '<div class="dd-it'+(x===p?' sel':'')+'" data-v="'+x+'"><span>$ '+x+'</span><span>'+coinOf(x)+' coins</span></div>';}).join('');
 }
 setAmt('');
 amtBox.onclick=function(e){var it=e.target.closest('.dd-it');if(it){setAmt(it.dataset.v);amtBox.classList.remove('open');e.stopPropagation();return;}amtBox.classList.toggle('open');};
