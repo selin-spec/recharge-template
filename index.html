@@ -118,7 +118,7 @@ body{zoom:1.227;font-family:-apple-system,"PingFang SC","Helvetica Neue",Arial,s
 .pvi .tile .a em{font-style:normal;font-size:14px;color:#888;margin-left:8px;font-weight:600}
 .pvi .tile .a .cn{margin:0 6px 0 0}
 .pvi .tile .pr{position:absolute;left:18px;top:44px;font-size:14px;color:#888;font-weight:600}
-.pvi .psc{position:absolute;left:0;right:0;top:72px;bottom:134px;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;padding-top:10px}
+.pvi .psc{position:absolute;left:0;right:0;top:72px;bottom:134px;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;padding-top:10px}
 .pvi .psc .pl{position:relative;margin:0 0 26px 15px}
 .pvi #tiles{display:flex;flex-wrap:wrap;gap:10px 14px;padding:0 0 16px 15px}
 .pvi #tiles .tile{position:relative;top:auto!important;left:auto!important}
@@ -160,7 +160,7 @@ body{zoom:1.227;font-family:-apple-system,"PingFang SC","Helvetica Neue",Arial,s
 .wxi .nav .tt{position:absolute;left:0;right:0;text-align:center;top:16px;font-size:19px}
 .wxi .nav .mo{position:absolute;right:22px;top:10px;font-size:22px;letter-spacing:2px}
 .wxi .chp{position:absolute;left:0;right:0;top:108px;height:46px;background:#f4f4f4;color:#999;font-size:16px;line-height:46px;padding-left:24px}
-.wxi .wsc{position:absolute;left:0;right:0;top:154px;bottom:178px;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;padding:0 20px 10px}
+.wxi .wsc{position:absolute;left:0;right:0;top:154px;bottom:178px;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;padding:0 20px 10px}
 .wxi .ul{margin-top:24px;font-size:16px;color:#888;display:flex;align-items:center;white-space:nowrap}
 .wxi .ul b{color:#111;font-size:19px;margin:0 6px 0 12px}
 .wxi .ul .off{margin-left:8px;background:linear-gradient(90deg,#f6a54b,#ef6a5a);color:#fff;border-radius:5px;padding:2px 8px;font-size:14px;font-style:italic;font-weight:600}
@@ -194,6 +194,14 @@ body{zoom:1.227;font-family:-apple-system,"PingFang SC","Helvetica Neue",Arial,s
 .wxi .wpay .sb2{position:absolute;left:20px;right:28px;top:84px;height:48px;line-height:48px;border-radius:7px;background:#111;color:#fff;text-align:center;font-size:20px}
 .wxi .wpay .ov{position:absolute;left:0;right:0;top:144px;text-align:center;font-size:13px;color:#888}
 .wxi .wpay .ov b{color:#333}
+.pvi .psc::-webkit-scrollbar,.wxi .wsc::-webkit-scrollbar{display:none}
+.m2 .row label{overflow:visible}
+#amtTxt{color:#1f2329}#amtTxt.ph{color:#bfc4cc}
+.qw{position:relative;display:inline-block;cursor:pointer}
+.qw .q{background:#4b5160}
+.qtip{display:none;position:absolute;left:50%;bottom:calc(100% + 9px);transform:translateX(-50%);background:#141a26;color:#fff;font-size:11px;font-weight:600;line-height:16px;padding:6px 10px;border-radius:5px;white-space:nowrap;z-index:20;text-align:left}
+.qtip:after{content:"";position:absolute;left:50%;bottom:-5px;margin-left:-5px;border:5px solid transparent;border-bottom:0;border-top-color:#141a26}
+.qw:hover .qtip{display:block}
 .nm{display:flex;align-items:center;font-size:11px;margin-top:0}
 .nm .rq{color:#f23a4e;margin-right:3px}
 .nm .ni{width:322px;height:27px;border:1px solid #dcdfe6;border-radius:6px;margin-left:5px;display:flex;align-items:center;justify-content:space-between;padding:0 10px;color:#bfc4cc}
@@ -287,7 +295,7 @@ body{zoom:1.227;font-family:-apple-system,"PingFang SC","Helvetica Neue",Arial,s
 <div class="mask2" id="mask2">
  <div class="m2">
   <h4>档位设置</h4><span class="x" id="m2x">✕</span>
-  <div class="row" style="top:66px"><label><span class="rq">*</span> 充值金额 <span class="q">?</span></label><div class="ctl dd" id="amtBox"><input type="hidden" id="amt" value=""><span class="dd-v"><span class="cur">$</span><span id="amtTxt" class="ph">请选择充值金额</span></span><span class="dd-c" id="amtCoin"></span><span class="dd-ar">⌄</span>
+  <div class="row" style="top:66px"><label><span class="rq">*</span> 充值金额 <span class="qw"><span class="q">?</span><span class="qtip" id="amtTip">1美刀≈70个coins≈70个bonus</span></span></label><div class="ctl dd" id="amtBox"><input type="hidden" id="amt" value=""><span class="dd-v"><span class="cur">$</span><span id="amtTxt" class="ph">请选择充值金额</span></span><span class="dd-c" id="amtCoin"></span><span class="dd-ar">⌄</span>
 <div class="dd-list" id="amtList"></div></div></div>
   <div class="row" style="top:107px"><label><span class="rq">*</span> <span id="bonLbl">赠送bonus</span></label><div class="ctl"><span style="flex:1;display:flex;align-items:center">$&nbsp;<input id="bon" placeholder="请填写赠送bonus数量"></span></div></div>
   <div class="ft"><div class="ok" id="m2ok">确 定</div></div>
@@ -307,6 +315,7 @@ document.getElementById('addBtn').onclick=function(){
  var m=modeOf(curTab());if(!m)return;
  MODE=m;buildSub();
  document.getElementById('bonLbl').textContent='赠送'+CFG[m].bonus;
+ document.getElementById('amtTip').textContent=m==='wx'?'1美刀≈70个书币≈70个书券':'1美刀≈70个coins≈70个bonus';
  document.getElementById('bon').placeholder='请填写赠送'+CFG[m].bonus+'数量';
  resetForm();mask.style.display='block';
 };
